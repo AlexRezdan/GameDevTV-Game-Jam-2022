@@ -11,6 +11,7 @@ public class Reincarnator : MonoBehaviour
     public GameObject girlSprite;
     public GameObject catSprite;
     public GameObject birdSprite;
+    public GameObject fishSprite;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +23,7 @@ public class Reincarnator : MonoBehaviour
             {
                 catSprite.SetActive(false);
                 birdSprite.SetActive(false);
+                fishSprite.SetActive(false);
                 girlSprite.SetActive(true);
                 player.currentSpriteAnimations = 0;
             }
@@ -29,6 +31,7 @@ public class Reincarnator : MonoBehaviour
             {
                 girlSprite.SetActive(false);
                 birdSprite.SetActive(false);
+                fishSprite.SetActive(false);
                 catSprite.SetActive(true);
                 player.currentSpriteAnimations = 1;
             }
@@ -36,8 +39,17 @@ public class Reincarnator : MonoBehaviour
             {
                 girlSprite.SetActive(false);
                 catSprite.SetActive(false);
+                fishSprite.SetActive(false);
                 birdSprite.SetActive(true);
                 player.currentSpriteAnimations = 2;
+            }
+            if (spriteType == SpriteType.Fish)
+            {
+                girlSprite.SetActive(false);
+                catSprite.SetActive(false);
+                birdSprite.SetActive(false);
+                fishSprite.SetActive(true);
+                player.currentSpriteAnimations = 3;
             }
         }
     }

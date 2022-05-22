@@ -17,9 +17,6 @@ public class Player : MonoBehaviour
     // Allows you to set the currently controlled character to start the level as any character.
     [SerializeField] private CurrentSprite currentSprite;
     public int currentSpriteAnimations;
-    //[SerializeField] private GameObject girlSprite;
-    //[SerializeField] private GameObject catSprite;
-    //[SerializeField] private GameObject birdSprite;
 
     [Header("Control Preferences")]
     private float horizontalInput;
@@ -61,6 +58,10 @@ public class Player : MonoBehaviour
         else if (currentSprite == CurrentSprite.Bird)
         {
             Fly();
+        }
+        else if (currentSprite == CurrentSprite.Fish)
+        {
+            Swim();
         }
     }
 
@@ -133,7 +134,21 @@ public class Player : MonoBehaviour
             rb2d.velocity += Vector2.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
             ChangeAnimationState(IDLE);
         }
-    } 
+    }
+
+    private void Swim()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            rb2d.velocity = Vector2.up * jumpForce;
+            ChangeAnimationState(IDLE);
+        }
+        else
+        {
+            rb2d.velocity += Vector2.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            ChangeAnimationState(IDLE);
+        }
+    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -178,6 +193,10 @@ public class Player : MonoBehaviour
                 currentSprite = CurrentSprite.Bird;
                 ChangeColliderSize(CurrentSprite.Bird);
                 break;
+            case 3:
+                currentSprite = CurrentSprite.Fish;
+                ChangeColliderSize(CurrentSprite.Fish);
+                break;
             default:
                 Debug.LogError("Current Sprite integer not found!");
                 break;
@@ -204,6 +223,11 @@ public class Player : MonoBehaviour
                 capsuleCollider2D.offset = new Vector2(0.7973438f, -0.07597946f);
                 capsuleCollider2D.size = new Vector2(4.836072f, 2.614592f);
                 capsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
+                break;
+            case CurrentSprite.Fish:
+                capsuleCollider2D.offset = new Vector2(-0.02556229f, 0.1634107f);
+                capsuleCollider2D.size = new Vector2(1.095589f, 1.783848f);
+                capsuleCollider2D.direction = CapsuleDirection2D.Vertical;
                 break;
         }
     }
