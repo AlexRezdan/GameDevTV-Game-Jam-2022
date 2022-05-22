@@ -68,7 +68,14 @@ public class Player : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
-        transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
+        if (currentSprite == CurrentSprite.Bird && isGrounded)
+        {
+            transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 3) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
+        }
 
         if (horizontalInput > 0)
         {
@@ -161,15 +168,42 @@ public class Player : MonoBehaviour
         {
             case 0:
                 currentSprite = CurrentSprite.Girl;
+                ChangeColliderSize(CurrentSprite.Girl);
                 break;
             case 1:
                 currentSprite = CurrentSprite.Cat;
+                ChangeColliderSize(CurrentSprite.Cat);
                 break;
             case 2:
                 currentSprite = CurrentSprite.Bird;
+                ChangeColliderSize(CurrentSprite.Bird);
                 break;
             default:
-                Debug.LogError("Current Sprite int not found!");
+                Debug.LogError("Current Sprite integer not found!");
+                break;
+        }
+    }
+
+    private void ChangeColliderSize(CurrentSprite currentSprite)
+    {
+        CapsuleCollider2D capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+
+        switch (currentSprite)
+        {
+            case CurrentSprite.Girl:
+                capsuleCollider2D.offset = new Vector2(0.3023667f, -0.2159758f);
+                capsuleCollider2D.size = new Vector2(2.19901f, 4.099597f);
+                capsuleCollider2D.direction = CapsuleDirection2D.Vertical;
+                break;
+            case CurrentSprite.Cat:
+                capsuleCollider2D.offset = new Vector2(0.3408749f, -1.293232f);
+                capsuleCollider2D.size = new Vector2(1.367718f, 1.945085f);
+                capsuleCollider2D.direction = CapsuleDirection2D.Vertical;
+                break;
+            case CurrentSprite.Bird:
+                capsuleCollider2D.offset = new Vector2(0.7973438f, -0.07597946f);
+                capsuleCollider2D.size = new Vector2(4.836072f, 2.614592f);
+                capsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
                 break;
         }
     }

@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Reincarnator : MonoBehaviour
 {
-    /* Indexes follow in this order
-     * Girl: 0
-     * Cat: 1
-     * Bird: 2
-     * Fish: 3
-    */
     enum SpriteType { Girl, Cat, Bird, Fish }
 
     [SerializeField] private SpriteType spriteType;
