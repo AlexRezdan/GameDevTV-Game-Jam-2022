@@ -17,8 +17,9 @@ public class Player : MonoBehaviour
     // Allows you to set the currently controlled character to start the level as any character.
     [SerializeField] private CurrentSprite currentSprite;
     public int currentSpriteAnimations;
-    [SerializeField] private GameObject girlSprite;
-    [SerializeField] private GameObject catSprite;
+    //[SerializeField] private GameObject girlSprite;
+    //[SerializeField] private GameObject catSprite;
+    //[SerializeField] private GameObject birdSprite;
 
     [Header("Control Preferences")]
     private float horizontalInput;
@@ -41,38 +42,26 @@ public class Player : MonoBehaviour
     private const string IDLE = "Idle";
     private const string WALK = "Walk";
     private const string JUMP = "Jump";
+    private const string FLY = "Fly";
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        SetCurrentPlayableSprite();
-    }
-
-    public void SetCurrentPlayableSprite()
-    {
-        if (currentSprite == CurrentSprite.Girl)
-        {
-            catSprite.SetActive(false);
-            girlSprite.SetActive(true);
-            currentSpriteAnimations = 0;
-        }
-        else if (currentSprite == CurrentSprite.Cat)
-        {
-            girlSprite.SetActive(false);
-            catSprite.SetActive(true);
-            currentSpriteAnimations = 1;
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
         Move();
-        Jump();
+
+        if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
+        {
+            Jump();
+        }
+        else if (currentSprite == CurrentSprite.Bird)
+        {
+            Fly();
+        }
     }
 
     private void Move()
@@ -125,6 +114,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Fly()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            rb2d.velocity = Vector2.up * jumpForce;
+            ChangeAnimationState(FLY);
+        }
+        else
+        {
+            rb2d.velocity += Vector2.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            ChangeAnimationState(IDLE);
+        }
+    } 
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -161,6 +164,9 @@ public class Player : MonoBehaviour
                 break;
             case 1:
                 currentSprite = CurrentSprite.Cat;
+                break;
+            case 2:
+                currentSprite = CurrentSprite.Bird;
                 break;
             default:
                 Debug.LogError("Current Sprite int not found!");
