@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerSprites
+public class SpriteAnimator
 {
     public Animator animator;
     public AnimationClip[] animations;
@@ -11,6 +11,16 @@ public class PlayerSprites
 
 public class Player : MonoBehaviour
 {
+    enum CurrentSprite { Girl, Cat, Bird, Fish }
+
+    [Header("Sprite References")]
+    // Allows you to set the currently controlled character to start the level as any character.
+    [SerializeField] private CurrentSprite currentSprite;
+    public int currentSpriteAnimations;
+    [SerializeField] private GameObject girlSprite;
+    [SerializeField] private GameObject catSprite;
+
+    [Header("Control Preferences")]
     private float horizontalInput;
     [Tooltip("How quickly the player moves left and right.")]
     [SerializeField] private float moveSpeed = 15.0f;
@@ -21,13 +31,12 @@ public class Player : MonoBehaviour
     [Tooltip("How quickly the player falls when jump button is let go before maximum jump height.")]
     [SerializeField] private float lowJumpMultiplier = 2.0f;
 
-    [SerializeField] private PlayerSprites[] playerSprites;
+    [SerializeField] private SpriteAnimator[] spriteAnimator;
 
     private bool isGrounded;
 
     private Rigidbody2D rb2d;
 
-    //[SerializeField] private Animator animator;
     private string currentAnimation;
     private const string IDLE = "Idle";
     private const string WALK = "Walk";
@@ -36,7 +45,27 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        SetCurrentPlayableSprite();
+    }
+
+    public void SetCurrentPlayableSprite()
+    {
+        if (currentSprite == CurrentSprite.Girl)
+        {
+            catSprite.SetActive(false);
+            girlSprite.SetActive(true);
+            currentSpriteAnimations = 0;
+        }
+        else if (currentSprite == CurrentSprite.Cat)
+        {
+            girlSprite.SetActive(false);
+            catSprite.SetActive(true);
+            currentSpriteAnimations = 1;
+        }
     }
 
     // Update is called once per frame
@@ -111,22 +140,31 @@ public class Player : MonoBehaviour
             isGrounded = false;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            // Change active child object based on what is touched.
-            // May need to create an Enum on Enemy objects to say what the player transforms into.
-        }
-    }
-
+    
     private void ChangeAnimationState(string newAnimation)
     {
         if (currentAnimation == newAnimation) return;
 
-        // TODO: Find a way for the 0 to reference the currently active child object (player sprite).
-        playerSprites[0].animator.Play(newAnimation);
+        SetCurrentCharacterAnimator(currentSpriteAnimations);
+
+        // currentSpriteAnimations comes from the Reincarnator script so the correct animation plays.
+        spriteAnimator[currentSpriteAnimations].animator.Play(newAnimation);
         currentAnimation = newAnimation;
+    }
+
+    private void SetCurrentCharacterAnimator(int currentSpriteAnimations)
+    {
+        switch (currentSpriteAnimations)
+        {
+            case 0:
+                currentSprite = CurrentSprite.Girl;
+                break;
+            case 1:
+                currentSprite = CurrentSprite.Cat;
+                break;
+            default:
+                Debug.LogError("Current Sprite int not found!");
+                break;
+        }
     }
 }
