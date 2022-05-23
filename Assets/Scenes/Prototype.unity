@@ -1194,9 +1194,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6953630834754919769, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7314610386526872841, guid: fccc4f7dd6f5840a2a521bfbbd7998dd, type: 3}
     - target: {fileID: 6953630834754919770, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_Name
-      value: ReincarnatorCoin (3)
+      value: ReincarnatorCoin (Fish)
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919771, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: spriteType
@@ -1981,9 +1985,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6953630834754919769, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7977205415241479187, guid: 8ecacc906241641f384a2d376af9c0ea, type: 3}
     - target: {fileID: 6953630834754919770, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_Name
-      value: ReincarnatorCoin (1)
+      value: ReincarnatorCoin (Girl)
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919771, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: spriteType
@@ -1995,7 +2003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64.62
+      value: 91.4
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2042,9 +2050,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6953630834754919769, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2185574239287130957, guid: 0da366c552ad94abdb4efeb425929d69, type: 3}
     - target: {fileID: 6953630834754919770, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_Name
-      value: ReincarnatorCoin (2)
+      value: ReincarnatorCoin (Bird)
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919771, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: spriteType
@@ -2056,11 +2068,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -60.370003
+      value: -41.5
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: 6.2
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2104,8 +2116,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
+      propertyPath: nextSpriteType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
       propertyPath: spriteAnimator.Array.data[0].animations.Array.size
-      value: 4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
+      propertyPath: spriteAnimator.Array.data[1].animations.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
       propertyPath: spriteAnimator.Array.data[0].animations.Array.data[3]
@@ -2170,7 +2190,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6953630834754919770, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_Name
-      value: ReincarnatorCoin
+      value: ReincarnatorCoin (Cat)
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_RootOrder
@@ -2178,7 +2198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -68.6
+      value: -75.89
       objectReference: {fileID: 0}
     - target: {fileID: 6953630834754919774, guid: b7aa8765a9c854ca9bc07282ecc62a25, type: 3}
       propertyPath: m_LocalPosition.y

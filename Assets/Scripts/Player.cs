@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpriteAnimator
 {
     public Animator animator;
-    public AnimationClip[] animations;
+    // public AnimationClip[] animations; **OLD WAY OF ASSIGNING MULTIPLE ANIMATIONS PER ANIMATOR**
 }
 
 public enum CurrentSprite { Girl, Cat, Bird, Fish }
@@ -14,22 +14,16 @@ public enum CurrentSprite { Girl, Cat, Bird, Fish }
 [RequireComponent(typeof(CapsuleCollider2D), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    // enum CurrentSprite { Girl, Cat, Bird, Fish }
-
     [Header("Sprite References")]
-    // Allows you to set the currently controlled character to start the level as any character.
-    [SerializeField] private CurrentSprite currentSprite;
+    [Tooltip("Make sure to assign correct Current Sprite Animations!")]
+    public CurrentSprite currentSprite;
+    [Tooltip("See Sprite Animator below for correct number.")]
     public int currentSpriteAnimations;
 
     public CurrentSprite nextSpriteType;
 
+    [Header("Girl Parameters")]
     public GameObject girlSprite;
-    public GameObject catSprite;
-    public GameObject birdSprite;
-    public GameObject fishSprite;
-
-    [Header("Control Preferences")]
-    private float horizontalInput;
     [Tooltip("How quickly the player moves left and right.")]
     [SerializeField] private float moveSpeed = 15.0f;
     [Tooltip("How high the player can jump.")]
@@ -39,12 +33,23 @@ public class Player : MonoBehaviour
     [Tooltip("How quickly the player falls when jump button is let go before maximum jump height.")]
     [SerializeField] private float lowJumpMultiplier = 2.0f;
 
-    [SerializeField] private SpriteAnimator[] spriteAnimator;
+    [Header("Cat Parameters")]
+    public GameObject catSprite;
+
+    [Header("Bird Parameters")]
+    public GameObject birdSprite;
+
+    [Header("Fish Parameters")]
+    public GameObject fishSprite;
+
+    private float horizontalInput;
 
     private bool isGrounded;
     private bool isDead;
 
     private Rigidbody2D rb2d;
+
+    [SerializeField] private SpriteAnimator[] spriteAnimator;
 
     private string currentAnimation;
     private const string IDLE = "Idle";

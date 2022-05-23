@@ -63,20 +63,41 @@ public class Reincarnator : MonoBehaviour
             StartCoroutine(Collect());
             switch (spriteType)
             {
+                // If statement prevents the toggle being overridden so transformation is always possible.
                 case SpriteType.Girl:
-                    Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                    if (Player.Instance.currentSprite == CurrentSprite.Girl) { return; }
+                    else
+                    {
+                        Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                    }
                     break;
                 case SpriteType.Cat:
-                    Player.Instance.nextSpriteType = CurrentSprite.Cat;
+                    if (Player.Instance.currentSprite == CurrentSprite.Cat) { return; }
+                    else
+                    {
+                        Player.Instance.nextSpriteType = CurrentSprite.Cat;
+                    }
                     break;
                 case SpriteType.Bird:
-                    Player.Instance.nextSpriteType = CurrentSprite.Bird;
+                    if (Player.Instance.currentSprite == CurrentSprite.Bird) { return; }
+                    else
+                    {
+                        Player.Instance.nextSpriteType = CurrentSprite.Bird;
+                    }
                     break;
                 case SpriteType.Fish:
-                    Player.Instance.nextSpriteType = CurrentSprite.Fish;
+                    if (Player.Instance.currentSprite == CurrentSprite.Fish) { return; }
+                    else
+                    {
+                        Player.Instance.nextSpriteType = CurrentSprite.Fish;
+                    }
                     break;
                 default: // Defaults to Girl if something goes wrong.
-                    Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                    if (Player.Instance.currentSprite == CurrentSprite.Girl) { return; }
+                    else
+                    {
+                        Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                    }
                     break;
             }
         }
