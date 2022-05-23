@@ -9,14 +9,23 @@ public class SpriteAnimator
     public AnimationClip[] animations;
 }
 
+public enum CurrentSprite { Girl, Cat, Bird, Fish }
+
 public class Player : MonoBehaviour
 {
-    enum CurrentSprite { Girl, Cat, Bird, Fish }
+    // enum CurrentSprite { Girl, Cat, Bird, Fish }
 
     [Header("Sprite References")]
     // Allows you to set the currently controlled character to start the level as any character.
     [SerializeField] private CurrentSprite currentSprite;
     public int currentSpriteAnimations;
+
+    public CurrentSprite nextSpriteType;
+
+    public GameObject girlSprite;
+    public GameObject catSprite;
+    public GameObject birdSprite;
+    public GameObject fishSprite;
 
     [Header("Control Preferences")]
     private float horizontalInput;
@@ -41,6 +50,17 @@ public class Player : MonoBehaviour
     private const string JUMP = "Jump";
     private const string FLY = "Fly";
 
+    // Singleton Instantion
+    private static Player instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (instance == null) instance = GameObject.FindObjectOfType<Player>();
+            return instance;
+        }
+    }
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -50,6 +70,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
+        Reincarnate();
 
         if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
         {
@@ -65,13 +86,71 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Reincarnate()
+    {
+        CurrentSprite toggleSprite;
+        toggleSprite = currentSprite;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            switch (nextSpriteType)
+            {
+                case CurrentSprite.Girl:
+                    catSprite.SetActive(false);
+                    birdSprite.SetActive(false);
+                    fishSprite.SetActive(false);
+                    girlSprite.SetActive(true);
+                    currentSpriteAnimations = 0;
+                    nextSpriteType = toggleSprite;
+                    currentSprite = CurrentSprite.Girl;
+                    break;
+                case CurrentSprite.Cat:
+                    girlSprite.SetActive(false);
+                    birdSprite.SetActive(false);
+                    fishSprite.SetActive(false);
+                    catSprite.SetActive(true);
+                    currentSpriteAnimations = 1;
+                    nextSpriteType = toggleSprite;
+                    currentSprite = CurrentSprite.Cat;
+                    break;
+                case CurrentSprite.Bird:
+                    girlSprite.SetActive(false);
+                    catSprite.SetActive(false);
+                    fishSprite.SetActive(false);
+                    birdSprite.SetActive(true);
+                    currentSpriteAnimations = 2;
+                    nextSpriteType = toggleSprite;
+                    currentSprite = CurrentSprite.Bird;
+                    break;
+                case CurrentSprite.Fish:
+                    girlSprite.SetActive(false);
+                    catSprite.SetActive(false);
+                    birdSprite.SetActive(false);
+                    fishSprite.SetActive(true);
+                    currentSpriteAnimations = 3;
+                    nextSpriteType = toggleSprite;
+                    currentSprite = CurrentSprite.Fish;
+                    break;
+                default: // Defaults to Girl if something goes wrong.
+                    catSprite.SetActive(false);
+                    birdSprite.SetActive(false);
+                    fishSprite.SetActive(false);
+                    girlSprite.SetActive(true);
+                    currentSpriteAnimations = 0;
+                    nextSpriteType = toggleSprite;
+                    currentSprite = CurrentSprite.Girl;
+                    break;
+            }
+        }
+    }
+
     private void Move()
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
         if (currentSprite == CurrentSprite.Bird && isGrounded)
         {
-            transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 3) * Time.deltaTime);
+            transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 6) * Time.deltaTime);
         }
         else
         {
