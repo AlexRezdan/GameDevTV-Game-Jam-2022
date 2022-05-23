@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CircleCollider2D), typeof(Animator), typeof(SpriteRenderer))]
 public class Reincarnator : MonoBehaviour
 {
     enum SpriteType { Girl, Cat, Bird, Fish }
@@ -14,7 +15,6 @@ public class Reincarnator : MonoBehaviour
     [SerializeField] private Sprite fishCoinSprite;
 
     private Animator animator;
-
     private SpriteRenderer spriteRenderer;
 
     private string currentAnimation;

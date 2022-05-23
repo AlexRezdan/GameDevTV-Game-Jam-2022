@@ -11,6 +11,7 @@ public class SpriteAnimator
 
 public enum CurrentSprite { Girl, Cat, Bird, Fish }
 
+[RequireComponent(typeof(CapsuleCollider2D), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     // enum CurrentSprite { Girl, Cat, Bird, Fish }
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteAnimator[] spriteAnimator;
 
     private bool isGrounded;
+    private bool isDead;
 
     private Rigidbody2D rb2d;
 
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
     private const string WALK = "Walk";
     private const string JUMP = "Jump";
     private const string FLY = "Fly";
+    private const string DEAD = "Dead";
 
     // Singleton Instantion
     private static Player instance;
@@ -66,23 +69,37 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        isDead = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Reincarnate();
+        if (!isDead)
+        {
+            Move();
+            Reincarnate();
 
-        if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
-        {
-            Jump();
+            if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
+            {
+                Jump();
+            }
+            else if (currentSprite == CurrentSprite.Bird)
+            {
+                Fly();
+            }
+            else if (currentSprite == CurrentSprite.Fish)
+            {
+                Swim();
+            }
         }
-        else if (currentSprite == CurrentSprite.Bird)
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Fly();
-        }
-        else if (currentSprite == CurrentSprite.Fish)
-        {
-            Swim();
+            isDead = true;
+            ChangeAnimationState(DEAD);
         }
     }
 

@@ -2103,6 +2103,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
+      propertyPath: spriteAnimator.Array.data[0].animations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110978735248087445, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
+      propertyPath: spriteAnimator.Array.data[0].animations.Array.data[3]
+      value: 
+      objectReference: {fileID: 7400000, guid: 91e58d04c3a58475995cdb0016797644, type: 2}
     - target: {fileID: 4110978735248087446, guid: dee8ccbbd104b46be9590bc30aaddedf, type: 3}
       propertyPath: m_RootOrder
       value: 5
