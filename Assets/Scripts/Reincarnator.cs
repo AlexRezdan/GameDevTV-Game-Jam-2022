@@ -69,6 +69,7 @@ public class Reincarnator : MonoBehaviour
                     else
                     {
                         Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                        UI.Instance.UpdateUI(Player.Instance.nextSpriteType);
                     }
                     break;
                 case SpriteType.Cat:
@@ -76,6 +77,7 @@ public class Reincarnator : MonoBehaviour
                     else
                     {
                         Player.Instance.nextSpriteType = CurrentSprite.Cat;
+                        UI.Instance.UpdateUI(Player.Instance.nextSpriteType);
                     }
                     break;
                 case SpriteType.Bird:
@@ -83,6 +85,7 @@ public class Reincarnator : MonoBehaviour
                     else
                     {
                         Player.Instance.nextSpriteType = CurrentSprite.Bird;
+                        UI.Instance.UpdateUI(Player.Instance.nextSpriteType);
                     }
                     break;
                 case SpriteType.Fish:
@@ -90,6 +93,7 @@ public class Reincarnator : MonoBehaviour
                     else
                     {
                         Player.Instance.nextSpriteType = CurrentSprite.Fish;
+                        UI.Instance.UpdateUI(Player.Instance.nextSpriteType);
                     }
                     break;
                 default: // Defaults to Girl if something goes wrong.
@@ -97,6 +101,7 @@ public class Reincarnator : MonoBehaviour
                     else
                     {
                         Player.Instance.nextSpriteType = CurrentSprite.Girl;
+                        UI.Instance.UpdateUI(Player.Instance.nextSpriteType);
                     }
                     break;
             }

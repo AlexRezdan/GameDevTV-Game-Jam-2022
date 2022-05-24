@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
                     currentSpriteAnimations = 0;
                     nextSpriteType = toggleSprite;
                     currentSprite = CurrentSprite.Girl;
+                    UI.Instance.UpdateUI(nextSpriteType);
                     break;
                 case CurrentSprite.Cat:
                     girlSprite.SetActive(false);
@@ -134,6 +135,7 @@ public class Player : MonoBehaviour
                     currentSpriteAnimations = 1;
                     nextSpriteType = toggleSprite;
                     currentSprite = CurrentSprite.Cat;
+                    UI.Instance.UpdateUI(nextSpriteType);
                     break;
                 case CurrentSprite.Bird:
                     girlSprite.SetActive(false);
@@ -143,6 +145,7 @@ public class Player : MonoBehaviour
                     currentSpriteAnimations = 2;
                     nextSpriteType = toggleSprite;
                     currentSprite = CurrentSprite.Bird;
+                    UI.Instance.UpdateUI(nextSpriteType);
                     break;
                 case CurrentSprite.Fish:
                     girlSprite.SetActive(false);
@@ -152,6 +155,7 @@ public class Player : MonoBehaviour
                     currentSpriteAnimations = 3;
                     nextSpriteType = toggleSprite;
                     currentSprite = CurrentSprite.Fish;
+                    UI.Instance.UpdateUI(nextSpriteType);
                     break;
                 default: // Defaults to Girl if something goes wrong.
                     catSprite.SetActive(false);
@@ -161,6 +165,7 @@ public class Player : MonoBehaviour
                     currentSpriteAnimations = 0;
                     nextSpriteType = toggleSprite;
                     currentSprite = CurrentSprite.Girl;
+                    UI.Instance.UpdateUI(nextSpriteType);
                     break;
             }
         }
@@ -253,7 +258,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("GroundChecker"))
         {
             isGrounded = true;
         }
@@ -261,7 +266,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("GroundChecker"))
         {
             isGrounded = false;
         }
