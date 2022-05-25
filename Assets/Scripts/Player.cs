@@ -100,12 +100,13 @@ public class Player : MonoBehaviour
                 Swim();
             }
         }
-
+        /*
         if (Input.GetKeyDown(KeyCode.F))
         {
             isDead = true;
             ChangeAnimationState(DEAD);
         }
+        */
     }
 
     private void Reincarnate()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class UI : MonoBehaviour
     public Sprite fishSprite;
 
     private Image image;
+
+    [SerializeField] TextMeshProUGUI pressHText;
+    [SerializeField] GameObject helpText;
 
     // Singleton Instantion
     private static UI instance;
@@ -26,7 +30,24 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        image = GetComponent<Image>();
+        image = GetComponentInChildren<Image>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (pressHText.enabled)
+            {
+                pressHText.enabled = false;
+                helpText.SetActive(true);
+            }
+            else if (helpText.activeInHierarchy)
+            {
+                helpText.SetActive(false);
+                pressHText.enabled = true;
+            }
+        }
     }
 
     // Update is called once per frame
