@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private SpriteAnimator[] spriteAnimator;
 
+    [SerializeField] private ParticleSystem reincarnateParticleEffect;
+
     private string currentAnimation;
     private const string IDLE = "Idle";
     private const string WALK = "Walk";
@@ -100,76 +102,90 @@ public class Player : MonoBehaviour
                 Swim();
             }
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isDead = true;
-            ChangeAnimationState(DEAD);
-        }
-        */
     }
 
     private void Reincarnate()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(DieAndWait());   
+        }
+    }
+
+    private IEnumerator DieAndWait()
+    {
         CurrentSprite toggleSprite;
         toggleSprite = currentSprite;
 
-        if (Input.GetKeyDown(KeyCode.R))
+        isDead = true;
+        ChangeAnimationState(DEAD);
+        yield return new WaitForSeconds(2f);
+        ChangeAnimationState(IDLE);
+
+        switch (nextSpriteType)
         {
-            switch (nextSpriteType)
-            {
-                case CurrentSprite.Girl:
-                    catSprite.SetActive(false);
-                    birdSprite.SetActive(false);
-                    fishSprite.SetActive(false);
-                    girlSprite.SetActive(true);
-                    currentSpriteAnimations = 0;
-                    nextSpriteType = toggleSprite;
-                    currentSprite = CurrentSprite.Girl;
-                    UI.Instance.UpdateUI(nextSpriteType);
-                    break;
-                case CurrentSprite.Cat:
-                    girlSprite.SetActive(false);
-                    birdSprite.SetActive(false);
-                    fishSprite.SetActive(false);
-                    catSprite.SetActive(true);
-                    currentSpriteAnimations = 1;
-                    nextSpriteType = toggleSprite;
-                    currentSprite = CurrentSprite.Cat;
-                    UI.Instance.UpdateUI(nextSpriteType);
-                    break;
-                case CurrentSprite.Bird:
-                    girlSprite.SetActive(false);
-                    catSprite.SetActive(false);
-                    fishSprite.SetActive(false);
-                    birdSprite.SetActive(true);
-                    currentSpriteAnimations = 2;
-                    nextSpriteType = toggleSprite;
-                    currentSprite = CurrentSprite.Bird;
-                    UI.Instance.UpdateUI(nextSpriteType);
-                    break;
-                case CurrentSprite.Fish:
-                    girlSprite.SetActive(false);
-                    catSprite.SetActive(false);
-                    birdSprite.SetActive(false);
-                    fishSprite.SetActive(true);
-                    currentSpriteAnimations = 3;
-                    nextSpriteType = toggleSprite;
-                    currentSprite = CurrentSprite.Fish;
-                    UI.Instance.UpdateUI(nextSpriteType);
-                    break;
-                default: // Defaults to Girl if something goes wrong.
-                    catSprite.SetActive(false);
-                    birdSprite.SetActive(false);
-                    fishSprite.SetActive(false);
-                    girlSprite.SetActive(true);
-                    currentSpriteAnimations = 0;
-                    nextSpriteType = toggleSprite;
-                    currentSprite = CurrentSprite.Girl;
-                    UI.Instance.UpdateUI(nextSpriteType);
-                    break;
-            }
+            case CurrentSprite.Girl:
+                catSprite.SetActive(false);
+                birdSprite.SetActive(false);
+                fishSprite.SetActive(false);
+                girlSprite.SetActive(true);
+                currentSpriteAnimations = 0;
+                nextSpriteType = toggleSprite;
+                currentSprite = CurrentSprite.Girl;
+                UI.Instance.UpdateUI(nextSpriteType);
+                break;
+            case CurrentSprite.Cat:
+                girlSprite.SetActive(false);
+                birdSprite.SetActive(false);
+                fishSprite.SetActive(false);
+                catSprite.SetActive(true);
+                currentSpriteAnimations = 1;
+                nextSpriteType = toggleSprite;
+                currentSprite = CurrentSprite.Cat;
+                UI.Instance.UpdateUI(nextSpriteType);
+                break;
+            case CurrentSprite.Bird:
+                girlSprite.SetActive(false);
+                catSprite.SetActive(false);
+                fishSprite.SetActive(false);
+                birdSprite.SetActive(true);
+                currentSpriteAnimations = 2;
+                nextSpriteType = toggleSprite;
+                currentSprite = CurrentSprite.Bird;
+                UI.Instance.UpdateUI(nextSpriteType);
+                break;
+            case CurrentSprite.Fish:
+                girlSprite.SetActive(false);
+                catSprite.SetActive(false);
+                birdSprite.SetActive(false);
+                fishSprite.SetActive(true);
+                currentSpriteAnimations = 3;
+                nextSpriteType = toggleSprite;
+                currentSprite = CurrentSprite.Fish;
+                UI.Instance.UpdateUI(nextSpriteType);
+                break;
+            default: // Defaults to Girl if something goes wrong.
+                catSprite.SetActive(false);
+                birdSprite.SetActive(false);
+                fishSprite.SetActive(false);
+                girlSprite.SetActive(true);
+                currentSpriteAnimations = 0;
+                nextSpriteType = toggleSprite;
+                currentSprite = CurrentSprite.Girl;
+                UI.Instance.UpdateUI(nextSpriteType);
+                break;
         }
+
+        StartCoroutine(PlayParticleEffectOnce());
+
+        isDead = false;
+    }
+
+    private IEnumerator PlayParticleEffectOnce()
+    {
+        reincarnateParticleEffect.Play();
+        yield return new WaitForSeconds(1f);
+        reincarnateParticleEffect.Stop();
     }
 
     private void Move()
