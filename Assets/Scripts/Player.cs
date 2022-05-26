@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private ParticleSystem reincarnateParticleEffect;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] footstepSounds;
+
     private string currentAnimation;
     private const string IDLE = "Idle";
     private const string WALK = "Walk";
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -215,6 +219,10 @@ public class Player : MonoBehaviour
             if (horizontalInput != 0)
             {
                 ChangeAnimationState(WALK);
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.PlayOneShot(footstepSounds[Random.Range(0, footstepSounds.Length)]);
+                }
             }
             else
             {

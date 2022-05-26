@@ -16,6 +16,9 @@ public class Reincarnator : MonoBehaviour
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+
+    [SerializeField] private AudioClip collectSound;
 
     private string currentAnimation;
     private const string IDLE = "Idle";
@@ -26,6 +29,7 @@ public class Reincarnator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -111,6 +115,7 @@ public class Reincarnator : MonoBehaviour
     private IEnumerator Collect()
     {
         ChangeAnimationState(COLLECT);
+        audioSource.PlayOneShot(collectSound);
         yield return new WaitForSeconds(1f);
         ChangeAnimationState(IDLE);
     }
