@@ -72,7 +72,7 @@ public class DialogueManagerInk : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Talk"))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             submitButtonPressedThisFrame = true;
         }
@@ -104,7 +104,7 @@ public class DialogueManagerInk : MonoBehaviour
 
         // reset portrait, layout, and speaker
         displayNameText.text = "???";
-        portraitAnimator.Play("default");
+        portraitAnimator.Play("Default");
         layoutAnimator.Play("right");
 
         ContinueStory();
@@ -271,7 +271,7 @@ public class DialogueManagerInk : MonoBehaviour
         {
             currentStory.ChooseChoiceIndex(choiceIndex);
             //submitButtonPressedThisFrame = false;
-            Input.GetButtonDown("Talk");
+            Input.GetKeyDown(KeyCode.T);
             ContinueStory();
         }
     }

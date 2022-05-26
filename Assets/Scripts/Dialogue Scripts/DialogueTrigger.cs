@@ -23,7 +23,7 @@ public class DialogueTrigger : MonoBehaviour
         if (playerInRange && !DialogueManagerInk.GetInstance().dialogueIsPlaying)
         {
             visualCue.SetActive(true);
-            if (Input.GetButtonDown("Talk"))
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 DialogueManagerInk.GetInstance().EnterDialogueMode(inkJSON);
             }
