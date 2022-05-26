@@ -90,20 +90,23 @@ public class Player : MonoBehaviour
     {
         if (!isDead)
         {
-            Move();
-            Reincarnate();
+            if (!DialogueManagerInk.GetInstance().dialogueIsPlaying)
+            {
+                Move();
+                Reincarnate();
 
-            if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
-            {
-                Jump();
-            }
-            else if (currentSprite == CurrentSprite.Bird)
-            {
-                Fly();
-            }
-            else if (currentSprite == CurrentSprite.Fish)
-            {
-                Swim();
+                if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Cat)
+                {
+                    Jump();
+                }
+                else if (currentSprite == CurrentSprite.Bird)
+                {
+                    Fly();
+                }
+                else if (currentSprite == CurrentSprite.Fish)
+                {
+                    Swim();
+                }
             }
         }
     }
