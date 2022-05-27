@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
 
     private bool isGrounded;
     private bool isDead;
+    public bool nextSpriteExists;
 
     private Rigidbody2D rb2d;
 
@@ -118,6 +119,11 @@ public class Player : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private IEnumerator WaitForZombie()
@@ -135,14 +141,24 @@ public class Player : MonoBehaviour
         birdSprite.SetActive(false);
         fishSprite.SetActive(false);
         zombieSprite.SetActive(true);
+        nextSpriteExists = false;
         currentSprite = CurrentSprite.Zombie;
         currentSpriteAnimations = 4;
         ChangeColliderSize(CurrentSprite.Girl);
     }
 
+    public void CanReincarnateNow()
+    {
+        if (nextSpriteExists == true) { return; }
+        else
+        {
+            nextSpriteExists = true;
+        }
+    }
+
     private void Reincarnate()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && nextSpriteExists)
         {
             StartCoroutine(DieAndWait());   
         }
@@ -153,7 +169,7 @@ public class Player : MonoBehaviour
         CurrentSprite toggleSprite;
         if (currentSprite == CurrentSprite.Zombie)
         {
-            toggleSprite = CurrentSprite.Girl;
+            toggleSprite = nextSpriteType;  // Zombie can only be starter sprite, so first token collected won't be toggleable yet.
         }
         else
         {

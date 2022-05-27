@@ -6,6 +6,7 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
+    public Sprite nullSprite;
     public Sprite girlSprite;
     public Sprite catSprite;
     public Sprite birdSprite;
@@ -31,6 +32,11 @@ public class UI : MonoBehaviour
     void Start()
     {
         image = GetComponentInChildren<Image>();
+
+        if (!Player.Instance.nextSpriteExists)
+        {
+            image.sprite = nullSprite;
+        }
     }
 
     private void Update()
@@ -68,7 +74,7 @@ public class UI : MonoBehaviour
                 image.sprite = fishSprite;
                 break;
             default:
-                image.sprite = girlSprite;
+                image.sprite = nullSprite;
                 break;
         }
     }

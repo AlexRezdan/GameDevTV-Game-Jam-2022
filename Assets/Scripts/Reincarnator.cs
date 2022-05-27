@@ -64,7 +64,10 @@ public class Reincarnator : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Player.Instance.CanReincarnateNow();
+
             StartCoroutine(Collect());
+
             switch (spriteType)
             {
                 // If statement prevents the toggle being overridden so transformation is always possible.
