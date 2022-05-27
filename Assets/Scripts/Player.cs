@@ -9,7 +9,7 @@ public class SpriteAnimator
     // public AnimationClip[] animations; **OLD WAY OF ASSIGNING MULTIPLE ANIMATIONS PER ANIMATOR**
 }
 
-public enum CurrentSprite { Girl, Cat, Bird, Fish }
+public enum CurrentSprite { Girl, Cat, Bird, Fish, Zombie }
 
 [RequireComponent(typeof(CapsuleCollider2D), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -41,6 +41,9 @@ public class Player : MonoBehaviour
 
     [Header("Fish Parameters")]
     public GameObject fishSprite;
+
+    [Header("Zombie Parameters")]
+    public GameObject zombieSprite;
 
     private float horizontalInput;
 
@@ -82,7 +85,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        isDead = false;
+        StartCoroutine(WaitForZombie());
     }
 
     // Update is called once per frame
@@ -111,6 +114,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void StartLevelAsZombie()
+    {
+        girlSprite.SetActive(false);
+        catSprite.SetActive(false);
+        birdSprite.SetActive(false);
+        fishSprite.SetActive(false);
+        zombieSprite.SetActive(true);
+        currentSprite = CurrentSprite.Zombie;
+        currentSpriteAnimations = 4;
+        ChangeColliderSize(CurrentSprite.Girl);
+    }
+
+    private IEnumerator WaitForZombie()
+    {
+        isDead = true;
+        StartLevelAsZombie();
+        yield return new WaitForSeconds(1f);
+        isDead = false;
+    }
+
     private void Reincarnate()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -122,7 +145,14 @@ public class Player : MonoBehaviour
     private IEnumerator DieAndWait()
     {
         CurrentSprite toggleSprite;
-        toggleSprite = currentSprite;
+        if (currentSprite == CurrentSprite.Zombie)
+        {
+            toggleSprite = CurrentSprite.Girl;
+        }
+        else
+        {
+            toggleSprite = currentSprite;
+        }
 
         isDead = true;
         ChangeAnimationState(DEAD);
@@ -132,6 +162,7 @@ public class Player : MonoBehaviour
         switch (nextSpriteType)
         {
             case CurrentSprite.Girl:
+                zombieSprite.SetActive(false);
                 catSprite.SetActive(false);
                 birdSprite.SetActive(false);
                 fishSprite.SetActive(false);
@@ -142,6 +173,7 @@ public class Player : MonoBehaviour
                 UI.Instance.UpdateUI(nextSpriteType);
                 break;
             case CurrentSprite.Cat:
+                zombieSprite.SetActive(false);
                 girlSprite.SetActive(false);
                 birdSprite.SetActive(false);
                 fishSprite.SetActive(false);
@@ -152,6 +184,7 @@ public class Player : MonoBehaviour
                 UI.Instance.UpdateUI(nextSpriteType);
                 break;
             case CurrentSprite.Bird:
+                zombieSprite.SetActive(false);
                 girlSprite.SetActive(false);
                 catSprite.SetActive(false);
                 fishSprite.SetActive(false);
@@ -162,6 +195,7 @@ public class Player : MonoBehaviour
                 UI.Instance.UpdateUI(nextSpriteType);
                 break;
             case CurrentSprite.Fish:
+                zombieSprite.SetActive(false);
                 girlSprite.SetActive(false);
                 catSprite.SetActive(false);
                 birdSprite.SetActive(false);
@@ -172,6 +206,7 @@ public class Player : MonoBehaviour
                 UI.Instance.UpdateUI(nextSpriteType);
                 break;
             default: // Defaults to Girl if something goes wrong.
+                zombieSprite.SetActive(false);
                 catSprite.SetActive(false);
                 birdSprite.SetActive(false);
                 fishSprite.SetActive(false);
@@ -199,7 +234,7 @@ public class Player : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
-        if (currentSprite == CurrentSprite.Bird && isGrounded)
+        if ((currentSprite == CurrentSprite.Bird && isGrounded) || (currentSprite == CurrentSprite.Zombie && isGrounded))
         {
             transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 6) * Time.deltaTime);
         }
@@ -330,6 +365,10 @@ public class Player : MonoBehaviour
             case 3:
                 currentSprite = CurrentSprite.Fish;
                 ChangeColliderSize(CurrentSprite.Fish);
+                break;
+            case 4:
+                currentSprite = CurrentSprite.Zombie;
+                ChangeColliderSize(CurrentSprite.Girl);
                 break;
             default:
                 Debug.LogError("Current Sprite integer not found!");
