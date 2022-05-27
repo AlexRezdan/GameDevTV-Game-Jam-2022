@@ -72,7 +72,7 @@ public class DialogueManagerInk : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetButtonDown("Submit"))
         {
             submitButtonPressedThisFrame = true;
         }
@@ -99,6 +99,7 @@ public class DialogueManagerInk : MonoBehaviour
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
+        Player.Instance.ChangeAnimationState("Idle");
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
@@ -271,7 +272,7 @@ public class DialogueManagerInk : MonoBehaviour
         {
             currentStory.ChooseChoiceIndex(choiceIndex);
             //submitButtonPressedThisFrame = false;
-            Input.GetKeyDown(KeyCode.T);
+            Input.GetButtonDown("Submit");
             ContinueStory();
         }
     }

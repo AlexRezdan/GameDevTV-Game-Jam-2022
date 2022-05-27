@@ -14,6 +14,9 @@ public enum CurrentSprite { Girl, Cat, Bird, Fish, Zombie }
 [RequireComponent(typeof(CapsuleCollider2D), typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    [Tooltip("Should the player start this level as a zombie?")]
+    [SerializeField] private bool startLevelAsZombie = true;
+
     [Header("Sprite References")]
     [Tooltip("Make sure to assign correct Current Sprite Animations!")]
     public CurrentSprite currentSprite;
@@ -85,7 +88,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(WaitForZombie());
+        if (startLevelAsZombie)
+        {
+            StartCoroutine(WaitForZombie());
+        }
     }
 
     // Update is called once per frame
@@ -114,6 +120,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator WaitForZombie()
+    {
+        isDead = true;
+        StartLevelAsZombie();
+        yield return new WaitForSeconds(1f); // Wait for zombie "Appear" animation to finish before being able to move.
+        isDead = false;
+    }
+
     private void StartLevelAsZombie()
     {
         girlSprite.SetActive(false);
@@ -124,14 +138,6 @@ public class Player : MonoBehaviour
         currentSprite = CurrentSprite.Zombie;
         currentSpriteAnimations = 4;
         ChangeColliderSize(CurrentSprite.Girl);
-    }
-
-    private IEnumerator WaitForZombie()
-    {
-        isDead = true;
-        StartLevelAsZombie();
-        yield return new WaitForSeconds(1f);
-        isDead = false;
     }
 
     private void Reincarnate()
@@ -236,7 +242,7 @@ public class Player : MonoBehaviour
 
         if ((currentSprite == CurrentSprite.Bird && isGrounded) || (currentSprite == CurrentSprite.Zombie && isGrounded))
         {
-            transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 6) * Time.deltaTime);
+            transform.Translate(Vector2.right * horizontalInput * (moveSpeed / 4) * Time.deltaTime);
         }
         else
         {
@@ -335,7 +341,7 @@ public class Player : MonoBehaviour
         }
     }
     
-    private void ChangeAnimationState(string newAnimation)
+    public void ChangeAnimationState(string newAnimation)
     {
         if (currentAnimation == newAnimation) return;
 
