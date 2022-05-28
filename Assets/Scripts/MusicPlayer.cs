@@ -50,19 +50,30 @@ public class MusicPlayer : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
-            Debug.Log("Playing for the first time.");
             audioSource.Play();
         }
-        else if (audioSource.isPlaying == music[songToPlayInThisLevel])
-        {
-            Debug.Log("Song is already playing!");
-            return;
-        }
-        else
-        {
-            Debug.Log("Playing new song.");
-            audioSource.Stop();
-            audioSource.PlayOneShot(music[songToPlayInThisLevel]);
-        }
+        //else if (audioSource.isPlaying == music[songToPlayInThisLevel])
+        //{
+        //    Debug.Log("Song is already playing!");
+        //    return;
+        //}
+        //else
+        //{
+        //    Debug.Log("Playing new song.");
+        //    audioSource.Stop();
+        //    audioSource.PlayOneShot(music[songToPlayInThisLevel]);
+        //}
+    }
+
+    // Comments are from me trying to figure out how to play different songs in some levels without stopping the continuous looping between consecutive levels. Couldn't figure it out, but am leaving this here for future reference.
+
+    private void Update()
+    {
+        //if (music[songToPlayInThisLevel] != audioSource.clip)
+        //{
+        //    audioSource.Stop();
+        //    audioSource.clip = music[songToPlayInThisLevel];
+        //    audioSource.Play();
+        //}
     }
 }

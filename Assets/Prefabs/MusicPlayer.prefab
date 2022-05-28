@@ -143,5 +143,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music:
   - {fileID: 8300000, guid: 7ecada4179b184215956ba1f8bf342fd, type: 3}
-  - {fileID: 8300000, guid: 4f6b87114f35445738cd5c0d20688b07, type: 3}
   songToPlayInThisLevel: 0
