@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb2d;
 
+    private CapsuleCollider2D capsuleCollider2D;
+
     [SerializeField] private SpriteAnimator[] spriteAnimator;
 
     [SerializeField] private ParticleSystem reincarnateParticleEffect;
@@ -85,6 +87,7 @@ public class Player : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
     }
 
     private void Start()
@@ -343,17 +346,37 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundChecker"))
+        if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Bird || currentSprite == CurrentSprite.Zombie)
         {
-            isGrounded = true;
+            if (collision.gameObject.CompareTag("GroundChecker"))
+            {
+                isGrounded = true;
+            }
+        }
+        if (currentSprite == CurrentSprite.Cat)
+        {
+            if (collision.gameObject.CompareTag("GroundChecker") || collision.gameObject.CompareTag("Ground"))
+            {
+                isGrounded = true;
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundChecker"))
+        if (currentSprite == CurrentSprite.Girl || currentSprite == CurrentSprite.Bird || currentSprite == CurrentSprite.Zombie)
         {
-            isGrounded = false;
+            if (collision.gameObject.CompareTag("GroundChecker"))
+            {
+                isGrounded = false;
+            }
+        }
+        if (currentSprite == CurrentSprite.Cat)
+        {
+            if (collision.gameObject.CompareTag("GroundChecker") || collision.gameObject.CompareTag("Ground"))
+            {
+                isGrounded = false;
+            }
         }
     }
     
@@ -400,8 +423,6 @@ public class Player : MonoBehaviour
 
     private void ChangeColliderSize(CurrentSprite currentSprite)
     {
-        CapsuleCollider2D capsuleCollider2D = GetComponent<CapsuleCollider2D>();
-
         switch (currentSprite)
         {
             case CurrentSprite.Girl:
