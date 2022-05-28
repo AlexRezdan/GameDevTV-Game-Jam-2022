@@ -16,7 +16,14 @@ public class SceneLoader : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(currentSceneIndex + 1);
+            if (currentSceneIndex < SceneManager.sceneCountInBuildSettings - 1)
+            {
+                SceneManager.LoadScene(currentSceneIndex + 1);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }
