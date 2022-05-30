@@ -38,3 +38,5 @@ footstep-grass.wav by swuing: https://freesound.org/people/swuing/sounds/38874/
 Grassy Footstep 3 by OwlStorm: https://freesound.org/people/OwlStorm/sounds/151228/ 
 
 Magic Flame by rubberduck: https://opengameart.org/content/magic-flame 
+
+Dialogue System based on YouTube series by Trevor Mock: https://www.youtube.com/watch?v=vY0Sk93YUhA&t=941s
